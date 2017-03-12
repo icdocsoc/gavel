@@ -8,30 +8,83 @@
     {% endassets %}
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-
-    <!-- Fonts -->
-    <link href="//fonts.googleapis.com/css?family=Montserrat:700" rel="stylesheet" type="text/css">
-    <link href="//fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet" type="text/css">
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="https://www.nwhacks.io/favicon.png">
 
     <!-- Enable responsiveness on mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-    <title>{% block title %}{% endblock %} &middot; Gavel</title>
+    <title>{% block title %}{% endblock %} - nwHacks Judging</title>
     {% block head %}
     {% endblock %}
   </head>
   <body>
+    <nav id="menu" class="style-scope main-app">
+      <span class="flex">
+      <a id="title" href="/" class="style-scope main-app">
+        <img draggable="false" src="https://www.nwhacks.io/svg/NWHacks-NavBar-Logo.svg" >
+      </a>
+      <a href="/">
+        Judge
+      </a>
+      <a href="/tables">
+        Table Assignments
+      </a>
+      </span>
+
+      <a href="https://www.nwhacks.io" class="small right style-scope main-app">
+        Main Site
+      </a>
+      <template is="dom-if" class="style-scope main-app"></template>
+    </nav>
     <div id="content">
       {% block content %}
       {% endblock %}
     </div>
-    <div id="footer">
-      <!-- Please don't remove this -->
-      <p>Powered by <a href="https://github.com/anishathalye/gavel" class="colored">Gavel</a></p>
-    </div>
     {% block end %}
     {% endblock %}
+
+    <footer class="style-scope nwhacks-footer">
+      <div class="skyline style-scope nwhacks-footer">
+        <object data="https://www.nwhacks.io/svg/Skyline-Footer-Cropped.svg" type="image/svg+xml" class="style-scope nwhacks-footer"></object>
+      </div>
+      <table class="foot style-scope nwhacks-footer">
+        <tbody class="style-scope nwhacks-footer">
+          <tr class="style-scope nwhacks-footer">
+            <td class="small-middle style-scope nwhacks-footer">
+              <nav class="grid-container style-scope nwhacks-footer">
+                nwHacks Team
+
+                <a href="https://github.com/nwhacks" class="style-scope nwhacks-footer">Source Code</a>
+              </nav>
+              <br class="style-scope nwhacks-footer">
+            </td>
+            <td class="small-first style-scope nwhacks-footer">
+              <nav class="grid-container style-scope nwhacks-footer">
+                <a href="mailto:apply@nwhacks.io" class="style-scope nwhacks-footer">Email Us</a>
+                <a href="http://mlh.io/code-of-conduct" class="style-scope nwhacks-footer">Code of Conduct </a>
+                <a href="/sponsors#sponsor" class="style-scope nwhacks-footer">Become a Sponsor</a>
+                <a href="mailto:sponsorship@nwhacks.io" class="style-scope nwhacks-footer">Email Sponsorship</a>
+              </nav>
+              <br class="style-scope nwhacks-footer">
+            </td>
+            <td class="small-middle style-scope nwhacks-footer">
+              <a href="https://www.facebook.com/nwHacks" class="style-scope nwhacks-footer">Facebook</a>
+              <a href="https://twitter.com/nwHacks" class="style-scope nwhacks-footer">Twitter</a>
+              <a href="https://medium.com/@nwHacks" class="style-scope nwhacks-footer">Medium</a>
+              <a href="https://www.instagram.com/nwhacks_" class="style-scope nwhacks-footer">Instagram</a>
+              <br class="style-scope nwhacks-footer">
+            </td>
+            <td class="small-last style-scope nwhacks-footer">
+              Organised and held by <a href="http://www.startupstorm.org/" target="_blank" class="style-scope nwhacks-footer">StartupStorm</a>
+            </td>
+          </tr>
+        </tbody><tbody class="style-scope nwhacks-footer">
+        </tbody></table>
+
+        <div id="footer">
+          <!-- Please don't remove this -->
+          <p>Powered by <a href="https://github.com/anishathalye/gavel" class="colored">Gavel</a></p>
+        </div>
+    </footer>
   </body>
 </html>

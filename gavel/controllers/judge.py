@@ -146,6 +146,13 @@ def welcome_done():
     db.session.commit()
     return redirect(url_for('index'))
 
+@app.route('/tables')
+def tables():
+    return render_template(
+            'tables.html',
+            items=Item.query.order_by(Item.id).all()
+    )
+
 def get_current_annotator():
     return Annotator.by_id(session.get(ANNOTATOR_ID, None))
 

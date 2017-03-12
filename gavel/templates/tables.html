@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block title %}Admin{% endblock %}
+{% block content %}
+<div class="item">
+  <div class="banner" id="admin-header">
+    <h1>Table Assignments</h1>
+  </div>
+</div>
+
+<div class="item">
+  <div class="info">
+    <table id="items">
+      <thead>
+        <tr>
+          <th data-sort-method="caseInsensitiveSort">Name</th>
+          <th data-sort-method="caseInsensitiveSort">Location</th>
+          <th data-sort-method="caseInsensitiveSort">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in items %}
+        <tr class="{{ 'disabled' if not item.active else 'prioritized' if item.prioritized else '' }}">
+          <td>{{ item.name | safe }}</td>
+          <td>{{ item.location | safe }}</td>
+          <td class="preserve-formatting">{{ item.description | safe }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}
+{% block end %}
+<script src="{{ url_for('static', filename='js/vendor/tablesort.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vendor/tablesort.number.js') }}"></script>
+<script>
+var tables = [
+  document.getElementById('items'),
+  document.getElementById('annotators'),
+];
+for (var i = 0; i < tables.length; i++) {
+  new Tablesort(tables[i]);
+}
+</script>
+{% endblock %}

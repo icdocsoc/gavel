@@ -19,10 +19,35 @@ $positive-color: $branding-green;
 $negative-color: $branding-red;
 $neutral-color: $branding-yellow;
 
-$text-color: #000000;
-$link-color: mix($branding-turquoise, black, 50%);
-$light: #fffefa;
-$light-grey: #e8e8e8;
+$text-color: #FFFFFF;
+$link-dark: #4BAE74;
+$link-color: lighten($link-dark, 20%);
+$light: rgb(91,99,119);
+$light-grey: lighten($light, 20%);
 $dark: $branding-dark;
-$heading-font: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
-$body-font: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$heading-font: "LFT Etica", "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$body-font: "LFT Etica", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+
+$light-fg: #444;
+$light-bg: white;
+$dark-bg: rgba(35,31,32,0.6);
+$dark-fg: #FFFFFF;
+$dark-fg-alt: #FFF2B5;
+$light-bg: #FFFFFF;
+$logo-size: 500px;
+$menu-padding: 15px;
+$tagline-font-size: 22pt;
+$infoline-font-size: 17pt;
+$link-dark: #4BAE74;
+$link: lighten($link-dark, 20%);
+
+$btn-shadow-size: 4px;
+$register-btn-fg: $dark-fg;
+$register-btn-bg: #FF6B6B;
+$register-btn-bg-shadow: #D74343;
+$login-btn-fg: #3C4558;
+$login-btn-bg: $light-bg;
+$login-btn-bg-shadow: #BCBEC0;
+
+$footer-bg: #414042;
