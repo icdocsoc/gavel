@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block title %}Wait{% endblock %}
+{% block content %}
+<div class="item">
+  <div class="banner">
+    <h1>Projects</h1>
+  </div>
+  <div class="info">
+    <table id="items">
+      <thead>
+        <tr>
+          <th data-sort-method="caseInsensitiveSort">Name</th>
+          <th data-sort-method="caseInsensitiveSort">Location</th>
+          <th data-sort-method="caseInsensitiveSort">Description</th>
+          <th data-sort-method="caseInsensitiveSort">Categories</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in items %}
+        <tr class="{{ 'disabled' if not item.active else '' }}">
+          <td>{{ item.name | safe }}</td>
+          <td>{{ item.location | safe }}</td>
+          <td class="preserve-formatting">{{ item.description | safe }}</td>
+          <td>
+            {% with categories=item.categories %}
+            {% include "_categories.html" %}
+            {% endwith %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -74,6 +74,11 @@ def index():
         return render_template('categories.html', categories=categories)
 
 
+@app.route('/tables/')
+def tables():
+    items = Item.query.order_by(Item.id).filter(Item.active == True).all()
+    return render_template('tables.html', items=items)
+
 @app.route('/category/<category_id>/')
 def judge(category_id):
     annotator = get_current_annotator()
