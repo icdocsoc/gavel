@@ -1,0 +1,211 @@
+$primary-color: #27AE60;
+$heading-font: 'Apercu', 'Roboto', sans-serif;
+$body-font: 'Apercu', 'Roboto', sans-serif;
+$link-color: $primary-color;
+$branding-green: $primary-color;
+
+@font-face {
+    font-family: "Apercu";
+    src: url(https://cdn.rawgit.com/nwhacks/nwhacks2018_static/master/font/Apercu.ttf) format("opentype");
+}
+@font-face {
+    font-family: "Apercu";
+    src: url(https://cdn.rawgit.com/nwhacks/nwhacks2018_static/master/font/Apercu-Light.otf) format("opentype");
+    font-weight: 500;
+}
+@font-face {
+    font-family: "Apercu";
+    src: url(https://cdn.rawgit.com/nwhacks/nwhacks2018_static/master/font/Apercu-Bold.otf) format("opentype");
+    font-weight: bold;
+}
+@font-face {
+    font-family: "Apercu";
+    src: url(https://cdn.rawgit.com/nwhacks/nwhacks2018_static/master/font/Apercu-BoldItalic.otf) format("opentype");
+    font-weight: bold;
+    font-style: italic;
+}
+@font-face {
+    font-family: "Apercu";
+    src: url(https://cdn.rawgit.com/nwhacks/nwhacks2018_static/master/font/Apercu-Light.otf) format("opentype");
+    font-weight: 200;
+}
+@font-face {
+    font-family: "Apercu";
+    src: url(https://cdn.rawgit.com/nwhacks/nwhacks2018_static/master/font/Apercu%20Light%20Italic.ttf) format("opentype");
+    font-weight: lighter;
+    font-style: italic;
+}
+
+body {
+  margin-top: 65px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: calc(100vh - 65px);
+}
+
+#menu {
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px 15px;
+  height: 65px;
+  left: 0;
+  right: 0;
+  top: 0;
+  background-color: white;
+  z-index: 100;
+}
+
+.spacer {
+  flex-grow: 10000000;
+}
+
+#menu img {
+  width: 34px;
+}
+
+#menu a {
+  color: inherit !important;
+  margin: 0 0.29em;
+  padding: 0 15px;
+}
+
+#menu #title {
+  font-size: 0;
+  margin: 0 8px;
+}
+
+#menu a:hover {
+  text-decoration: none;
+  color: $primary-color !important;
+}
+
+.button {
+  margin: 0 0.29em;
+  padding: 12px 15px;
+  font-size: 15pt;
+}
+
+a {
+  color: $primary-color !important;
+  text-decoration: none;
+  font-weight: normal !important;
+}
+
+a:hover {
+  color: $primary-color !important;
+  text-decoration: underline;
+}
+
+
+h2 {
+  font-weight: normal;
+  font-size: 25px;
+  color: #27AE60;
+  margin-top: 0.7em;
+  margin-bottom: 5px;
+  font-weight: lighter;
+}
+h1 {
+  margin: 0 auto;
+  padding-top: 80px;
+  padding-bottom: 25px;
+  line-height: normal;
+  font-size: 38px;
+  text-align: center;
+  font-weight: bold;
+}
+
+h1, h2, h3 {
+  color: $primary-color;
+}
+
+.banner {
+  background-color: transparent !important;
+  text-transform: none !important;
+}
+
+h2, h3 {
+  margin-bottom: -5px;
+  margin-top: 30px;
+}
+h2, p, ul, ol, td, th {
+  font-size: 14pt;
+}
+
+$footer-bg: #1C205D;
+
+#footer {
+  background-color: $footer-bg;
+  color: white;
+  margin: 0 !important;
+  overflow: hidden;
+  border: none !important;
+}
+
+footer {
+  overflow: hidden;
+}
+
+footer .foot {
+  padding-top: 50px;
+  padding-bottom: 20px;
+  background-color: $footer-bg;
+  margin: 0 auto;
+  text-align: center;
+  color: white;
+}
+
+footer .foot .social {
+  margin: 0 auto;
+}
+footer .foot .social .icon {
+  height: 33px;
+  padding-right: 43px;
+}
+footer .foot .social .icon-last {
+  height: 33px;
+}
+
+footer .foot .links {
+  display: inline-block;
+  margin: 30px auto;
+  font-size: 19px;
+  font-weight: lighter !important;
+  color: #FFFFFF !important;
+}
+footer .foot .links .link {
+  display: inline;
+  padding-right: 37px;
+}
+footer .foot .links .link-last {
+  display: inline;
+}
+
+footer p {
+  line-height: 15px;
+  font-size: 19px;
+  text-align: center;
+}
+
+@media (max-width: 650px) {
+  footer .foot {
+    padding-bottom: 170px;
+  }
+  footer .foot .links .link {
+    display: block;
+    padding-right: 0;
+    padding-bottom: 15px;
+  }
+}
+
+@media (max-width: 375px){
+  footer .foot p {
+    font-size: 17px;
+  }
+  footer .foot .social .icon {
+    padding-right: 30px;
+  }
+}

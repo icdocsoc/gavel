@@ -23,10 +23,13 @@
     {% endblock %}
   </head>
   <body>
+    {% include "nwhacks_header.html" %}
     <div id="content">
       {% block content %}
       {% endblock %}
     </div>
+
+    {% include "nwhacks_footer.html" %}
 
     <div id="footer">
       <p>
