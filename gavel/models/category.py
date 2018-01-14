@@ -27,11 +27,7 @@ class Category(db.Model):
 
     @classmethod
     def by_name_or_id(cls, uid):
-        category = cls.by_id(uid)
-        if category:
-            return category
-
         try:
-            return cls.query.filter(cls.name == uid).first()
+            return cls.query.filter(cls.name == str(uid)).first()
         except NoResultFound:
-            return None
+            return cls.by_id(int(uid))
