@@ -66,7 +66,7 @@ The latest stable version is the `master` branch (and it's signed and tagged).
 Development happens in the `develop` branch.
 
 The web application is written in **Python 3** using Flask. It also uses NumPy
-and SciPy for math stuff. Doing a `pip install -r requirements.txt` should
+and SciPy for math stuff. Doing a `pip --no-cache-dir install -r requirements.txt` should
 install all the dependencies.
 
 The application uses Postgres for the database, so you need to have that on
@@ -168,7 +168,7 @@ If you use Gavel in any way in academic work, please cite the following:
 
 ## License
 
-Copyright (c) 2015-2017 Anish Athalye. Released under AGPLv3. See
+Copyright (c) 2015-2018 Anish Athalye. Released under AGPLv3. See
 [LICENSE.txt][license] for details.
 
 [blog-1]: http://www.anishathalye.com/2015/03/07/designing-a-better-judging-system/
