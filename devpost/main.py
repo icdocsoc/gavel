@@ -5,14 +5,17 @@ import csv
 # number of expo tables available in the venue
 NUM_TABLES = 100
 
+# default categories that all projects will automatically be assigned to
+MANDATORY_CATEGORIES = ["Popular Vote"]
+
+# prefix for location field of exported projects
+LOCATION_PREFIX = "Table "
+
 # map of already-taken tables
 tables_in_use = {}
 
 # map of projects
 projects = {}
-
-# default categories that all projects will automatically be assigned to
-mandatory_categories = ["Popular Vote"]
 
 # increase field size limit to handle large descriptions from Devpost projects
 csv.field_size_limit(sys.maxsize)
@@ -117,29 +120,32 @@ def assign_remaining_tables():
 Exports projects to a formatted CSV that Gavel can accept.
 '''
 def export_projects():
-    buffer = []
+    buffer = {}
     for project in projects.values():
         output_project = [
             project["name"],
-            project["location"],
+            LOCATION_PREFIX + str(project["location"]),
             project["description"],
         ]
         categories = parse_categories(project["categories"])
         for category_name in categories:
             output_project.append(category_name)
-        for category_name in mandatory_categories:
+        for category_name in MANDATORY_CATEGORIES:
             output_project.append(category_name)
-        buffer.append(output_project)
+        buffer[project["location"]] = output_project
+    output_file = []
+    for k in sorted(buffer.keys()):
+        output_file.append(buffer[k])
     with open("projects.csv", 'w', newline='', encoding='UTF8') as f:
         writer = csv.writer(f)
-        writer.writerows(buffer)
+        writer.writerows(output_file)
 
 '''
 Exports all category names (found in the input CSV) as a CSV file that Gavel can accept.
 ''' 
 def export_available_categories():
     all_categories = {}
-    for category_name in mandatory_categories:
+    for category_name in MANDATORY_CATEGORIES:
         all_categories[category_name] = True
     for project in projects.values():
         categories = parse_categories(project["categories"])
