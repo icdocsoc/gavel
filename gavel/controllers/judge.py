@@ -1,6 +1,6 @@
 from time import sleep
 
-from psycopg2._psycopg import TransactionRollbackError
+from sqlalchemy.exc import OperationalError
 
 from gavel import app
 from gavel.models import *
@@ -149,7 +149,7 @@ def vote():
                 annotator_category.update_next(choose_next(annotator, annotator_category))
                 db.session.commit()
                 break
-            except TransactionRollbackError:
+            except OperationalError:
                 db.session.rollback()
                 sleep(random() / 10)
     return redirect(url_for('judge', category_id=category_id))
