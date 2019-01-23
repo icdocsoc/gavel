@@ -277,14 +277,14 @@ def choose_next(annotator, annotator_category):
                 annotator_category.prev.get_category(annotator_category.category_id).mu,
                 annotator_category.prev.get_category(annotator_category.category_id).sigma_sq,
                 i.mu,
-                i.sigma_sq), i.item), items))
+                i.sigma_sq), i), items))
 
             ranked = sorted(ranked, key=lambda entry: entry[0], reverse=True)
 
             best_choice = ranked[0][1]
 
-            for (information, item) in ranked[:int(math.ceil(len(ranked) / 3))]:
-                if item.location.startswith(prefix):
+            for (information, item_category) in ranked[:int(math.ceil(len(ranked) / 3))]:
+                if item_category.item.location.startswith(prefix):
                     best_choice = item
 
             return best_choice
