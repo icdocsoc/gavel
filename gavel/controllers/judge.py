@@ -259,12 +259,12 @@ def filter_same_location(items, annotator):
 
 def choose_next(annotator, annotator_category):
     items = preferred_items(annotator, annotator_category)
-    prefix = annotator.prev.location.split(' ')[0]
+    prefix = annotator_category.prev.location.split(' ')[0]
 
     shuffle(items) # useful for argmax case as well in the case of ties
     if items:
         if random() < crowd_bt.EPSILON:
-            filtered = filter_same_location(items, annotator)
+            filtered = filter_same_location(items, annotator_category)
 
             if filtered:
                 return filtered[0]
