@@ -1,5 +1,6 @@
 from time import sleep
 
+import math
 from sqlalchemy.exc import OperationalError
 
 from gavel import app
@@ -252,21 +253,41 @@ def maybe_init_annotator(annotator, annotator_category):
             annotator_category.update_next(choice(items))
             db.session.commit()
 
+def filter_same_location(items, annotator):
+    prefix = annotator.prev.location.split(' ')[0]
+    return list(filter(lambda item: item.location.startswith(prefix), items))
+
 def choose_next(annotator, annotator_category):
     items = preferred_items(annotator, annotator_category)
+    prefix = annotator.prev.location.split(' ')[0]
 
     shuffle(items) # useful for argmax case as well in the case of ties
     if items:
         if random() < crowd_bt.EPSILON:
-            return items[0]
+            filtered = filter_same_location(items, annotator)
+
+            if filtered:
+                return filtered[0]
+            else:
+                return items[0]
         else:
-            return crowd_bt.argmax(lambda i: crowd_bt.expected_information_gain(
+            ranked = list(map(lambda i: (crowd_bt.expected_information_gain(
                 annotator_category.alpha,
                 annotator_category.beta,
                 annotator_category.prev.get_category(annotator_category.category_id).mu,
                 annotator_category.prev.get_category(annotator_category.category_id).sigma_sq,
                 i.mu,
-                i.sigma_sq), items)
+                i.sigma_sq), i), items))
+
+            ranked = sorted(ranked, key=lambda entry: entry[0], reverse=True)
+
+            best_choice = ranked[0][1]
+
+            for (information, item) in ranked[:int(math.ceil(len(ranked) / 3))]:
+                if item.location.startswith(prefix):
+                    best_choice = item
+
+            return best_choice
     else:
         return None
 
