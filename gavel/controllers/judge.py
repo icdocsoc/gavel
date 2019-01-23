@@ -277,7 +277,7 @@ def choose_next(annotator, annotator_category):
                 annotator_category.prev.get_category(annotator_category.category_id).mu,
                 annotator_category.prev.get_category(annotator_category.category_id).sigma_sq,
                 i.mu,
-                i.sigma_sq), i), items))
+                i.sigma_sq), i.item), items))
 
             ranked = sorted(ranked, key=lambda entry: entry[0], reverse=True)
 
