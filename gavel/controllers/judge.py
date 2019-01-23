@@ -285,7 +285,7 @@ def choose_next(annotator, annotator_category):
 
             for (information, item_category) in ranked[:int(math.ceil(len(ranked) / 3))]:
                 if item_category.item.location.startswith(prefix):
-                    best_choice = item
+                    best_choice = item_category
 
             return best_choice
     else:
