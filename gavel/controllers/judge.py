@@ -1,3 +1,7 @@
+from time import sleep
+
+from psycopg2._psycopg import TransactionRollbackError
+
 from gavel import app
 from gavel.models import *
 from gavel.constants import *
@@ -119,29 +123,35 @@ def vote():
     category_id = request.form['category_id']
     annotator_category = annotator.get_category(category_id)
     if annotator_category.category.active and annotator_category.prev.id == int(request.form['prev_id']) and annotator_category.next.id == int(request.form['next_id']):
-        if request.form['action'] == 'Skip':
-            annotator_category.ignore.append(annotator_category.next)
-        else:
-            # ignore things that were deactivated in the middle of judging
-            if annotator_category.prev.active and annotator_category.next.active:
-                if request.form['action'] == 'Previous':
-                    perform_vote(annotator, annotator_category, next_won=False)
-                    decision = Decision(annotator,
-                            category=annotator_category.category,
-                            winner=annotator_category.prev,
-                            loser=annotator_category.next)
-                elif request.form['action'] == 'Current':
-                    perform_vote(annotator, annotator_category, next_won=True)
-                    decision = Decision(annotator,
-                            category=annotator_category.category,
-                            winner=annotator_category.next,
-                            loser=annotator_category.prev)
-                db.session.add(decision)
-            annotator_category.next.get_category(category_id).viewed.append(annotator) # counted as viewed even if deactivated
-            annotator_category.prev = annotator_category.next
-            annotator_category.ignore.append(annotator_category.prev)
-        annotator_category.update_next(choose_next(annotator, annotator_category))
-        db.session.commit()
+        while True:
+            try:
+                if request.form['action'] == 'Skip':
+                    annotator_category.ignore.append(annotator_category.next)
+                else:
+                    # ignore things that were deactivated in the middle of judging
+                    if annotator_category.prev.active and annotator_category.next.active:
+                        if request.form['action'] == 'Previous':
+                            perform_vote(annotator, annotator_category, next_won=False)
+                            decision = Decision(annotator,
+                                    category=annotator_category.category,
+                                    winner=annotator_category.prev,
+                                    loser=annotator_category.next)
+                        elif request.form['action'] == 'Current':
+                            perform_vote(annotator, annotator_category, next_won=True)
+                            decision = Decision(annotator,
+                                    category=annotator_category.category,
+                                    winner=annotator_category.next,
+                                    loser=annotator_category.prev)
+                        db.session.add(decision)
+                    annotator_category.next.get_category(category_id).viewed.append(annotator) # counted as viewed even if deactivated
+                    annotator_category.prev = annotator_category.next
+                    annotator_category.ignore.append(annotator_category.prev)
+                annotator_category.update_next(choose_next(annotator, annotator_category))
+                db.session.commit()
+                break
+            except TransactionRollbackError:
+                db.session.rollback()
+                sleep(random() / 10)
     return redirect(url_for('judge', category_id=category_id))
 
 @app.route('/begin', methods=['POST'])
