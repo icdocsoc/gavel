@@ -255,7 +255,7 @@ def maybe_init_annotator(annotator, annotator_category):
 
 def filter_same_location(items, annotator):
     prefix = annotator.prev.location.split(' ')[0]
-    return list(filter(lambda item: item.location.startswith(prefix), items))
+    return list(filter(lambda item_category: item_category.item.location.startswith(prefix), items))
 
 def choose_next(annotator, annotator_category):
     items = preferred_items(annotator, annotator_category)
