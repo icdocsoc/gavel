@@ -1,9 +1,9 @@
 $branding-orange: #ffbc29;
 $branding-turquoise: #4ecdc4;
-$branding-red: #fc5454;
+$branding-red: rgb(239, 7, 84);
 $branding-yellow: #ffe86b;
 $branding-green: #c9d41b;
-$branding-dark: #0b3b4b;
+$branding-dark: rgb(239, 7, 84);
 
 $wait-color: $branding-yellow;
 $error-color: $branding-red;
@@ -24,5 +24,13 @@ $link-color: mix($branding-turquoise, black, 50%);
 $light: #fffefa;
 $light-grey: #e8e8e8;
 $dark: $branding-dark;
-$heading-font: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
-$body-font: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$heading-font: "Montserrat",
+"Helvetica Neue",
+Helvetica,
+Arial,
+sans-serif;
+$body-font: "Lato",
+"Helvetica Neue",
+Helvetica,
+Arial,
+sans-serif;
