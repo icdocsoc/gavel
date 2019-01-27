@@ -1,15 +1,22 @@
 import argparse
-import sys
 import csv
 
 # number of expo tables available in the venue
-NUM_TABLES = 100
+NUM_TABLES = 200
 
 # default categories that all projects will automatically be assigned to
-MANDATORY_CATEGORIES = ["Popular Vote"]
+MANDATORY_CATEGORIES = ["DoCSoc Choice"]
 
 # prefix for location field of exported projects
 LOCATION_PREFIX = "Table "
+
+IGNORED_CATEGORIES = ['Accenture: Most Ethical/(For Good) Hack', 'Microsoft: Cognitive Challenge',
+                      'Next Jump: Most Helpful Hack', 'Ocado Technology: Fastest Delivery Challenge',
+                      'TPP: Greatest Impact on Healthcare']
+
+NOT_INCLUDED_TOWARDS_LIMIT = ["Newcomers' Prize"]
+
+LIMIT = 2
 
 # map of already-taken tables
 tables_in_use = {}
@@ -18,7 +25,7 @@ tables_in_use = {}
 projects = {}
 
 # increase field size limit to handle large descriptions from Devpost projects
-csv.field_size_limit(sys.maxsize)
+csv.field_size_limit(999999)
 
 '''
 Returns command line arguments
@@ -39,7 +46,7 @@ def populate_projects():
             i += 1
             projects[i] = {
                 "name": row["Submission Title"],
-                "location": row["What's Your Table Number?"],
+                "location": row["Table Number"],
                 "description": row["Plain Description"],
                 "categories": row["Desired Prizes"],
             }
@@ -67,12 +74,18 @@ def parse_categories(categories):
         if not in_quote:
             if character == ',':
                 category_name = categories[left:i].strip()
-                category_list.append(category_name)
+
+                if category_name not in IGNORED_CATEGORIES:
+                    category_list.append(category_name)
+
                 left = i+1
         i += 1
     if left < len(categories):
         category_name = categories[left:].strip()
-        category_list.append(category_name)
+
+        if category_name not in IGNORED_CATEGORIES:
+            category_list.append(category_name)
+
     return category_list
 
 '''
@@ -116,6 +129,15 @@ def assign_remaining_tables():
             projects[key]["location"] = table_number
             tables_in_use[table_number] = True
 
+def limit_categories(categories):
+    limit = LIMIT
+
+    for not_included in NOT_INCLUDED_TOWARDS_LIMIT:
+        if not_included in categories:
+            limit += 1
+
+    return categories[:min(len(categories), limit)]
+
 '''
 Exports projects to a formatted CSV that Gavel can accept.
 '''
@@ -127,7 +149,7 @@ def export_projects():
             LOCATION_PREFIX + str(project["location"]),
             project["description"],
         ]
-        categories = parse_categories(project["categories"])
+        categories = limit_categories(parse_categories(project["categories"]))
         for category_name in categories:
             output_project.append(category_name)
         for category_name in MANDATORY_CATEGORIES:
@@ -142,7 +164,7 @@ def export_projects():
 
 '''
 Exports all category names (found in the input CSV) as a CSV file that Gavel can accept.
-''' 
+'''
 def export_available_categories():
     all_categories = {}
     for category_name in MANDATORY_CATEGORIES:
@@ -161,7 +183,7 @@ if __name__ == '__main__':
     args = get_args()
     populate_projects()
     reserve_requested_tables()
-    assign_remaining_tables()
+    # assign_remaining_tables()
     print("Exporting projects...")
     export_projects()
     print("Projects successfully exported!\n")
