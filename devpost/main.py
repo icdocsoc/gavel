@@ -144,6 +144,12 @@ Exports projects to a formatted CSV that Gavel can accept.
 def export_projects():
     buffer = {}
     for project in projects.values():
+        if project["location"] < 44:
+          LOCATION_PREFIX = "QTR "
+        elif project["location"] < 75:
+          LOCATION_PREFIX = "SCR "
+        else:
+          LOCATION_PREFIX = "JCR "
         output_project = [
             project["name"],
             LOCATION_PREFIX + str(project["location"]),
